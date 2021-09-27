@@ -42,7 +42,7 @@ users = {
 }
 
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST', 'DELETE'])
 # GET: retrives and shows the information
 # POST: adds the information
 def get_users():
@@ -58,6 +58,13 @@ def get_users():
     elif request.method == 'POST':
         userToAdd = request.get_json()
         users['users_list'].append(userToAdd)
+        resp = jsonify(success=True)
+        # resp.status_code = 200 #optionally, you can always set a response code.
+        # 200 is the default code for a normal response
+        return resp
+    elif request.method == 'DELETE':
+        userToremove = request.get_json()
+        users['users_list'].remove(userToremove)
         resp = jsonify(success=True)
         # resp.status_code = 200 #optionally, you can always set a response code.
         # 200 is the default code for a normal response
